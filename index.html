@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Marketing Tree</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #0056b3;
+    }
+    details {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      background-color: #fff;
+    }
+    summary {
+      font-weight: bold;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    .content {
+      margin-top: 10px;
+    }
+    iframe {
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+    }
+    a {
+      color: #0066cc;
+    }
+    .task {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .completed {
+      background-color: #d4edda;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Digital Marketing Explorer Tree</h1>
+
+  <div id="task-list"></div>
+
+  <!-- Existing Digital Marketing Tree Content -->
+  <!-- All <details> blocks remain unchanged below -->
+
+  <!-- [PLACEHOLDER FOR TREE CONTENT - KEPT UNCHANGED] -->
+  <!-- ... (your existing details blocks remain here) ... -->
+
+  <script>
+    const tasks = [
+      { day: "Day 1", task: "Google Digital Marketing Basics", link: "https://skillshop.exceedlms.com/student/path/2907226" },
+      { day: "Day 2", task: "SEO Introduction – YouTube", link: "https://www.youtube.com/watch?v=Qk2XpHjJXK8" },
+      { day: "Day 3", task: "Email Marketing – HubSpot Free Course", link: "https://academy.hubspot.com/courses/email-marketing" }
+    ];
+
+    const username = "baskar";
+
+    async function markComplete(day, task, link, element) {
+      const res = await fetch('http://localhost:3000/save-progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, day, task, status: "completed" })
+      });
+
+      if (res.ok) {
+        element.classList.add("completed");
+        alert(`✅ Marked "${task}" as completed`);
+        window.open(link, '_blank');
+      }
+    }
+
+    const taskList = document.getElementById("task-list");
+    tasks.forEach(t => {
+      const div = document.createElement("div");
+      div.className = "task";
+      div.innerHTML = `<strong>${t.day}:</strong> ${t.task}<br><button>Go to Resource</button>`;
+      div.querySelector("button").addEventListener("click", () => markComplete(t.day, t.task, t.link, div));
+      taskList.appendChild(div);
+    });
+  </script>
+</body>
+</html>
